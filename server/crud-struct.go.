@@ -1,0 +1,59 @@
+package main
+
+import "fmt"
+
+var tasks []Task
+
+type TaskInterface interface {
+}
+
+type Task struct {
+	Id          int
+	Name        string
+	isCompleted bool
+}
+
+func addTask(task Task) Task {
+	tasks = append(tasks, task)
+	return task
+}
+
+func getTasks() []Task {
+	return tasks
+}
+
+func getTask(id int) Task {
+	var foundTask Task
+
+	for _, task := range tasks {
+		if task.Id == id {
+			foundTask = task
+			break
+		}
+	}
+
+	return foundTask
+}
+
+func find(slice []Task, id int) (int, *Task) {
+	for i, v := range slice {
+		if v.Id == id {
+			return i, &v
+		}
+	}
+	return -1, nil
+}
+
+func deleteTask() {
+
+}
+func main() {
+	fmt.Printf("Welcome to crud-struct\n")
+
+	addTask(Task{Id: 1, Name: "setup graphql with go", isCompleted: false})
+	fmt.Printf("Tasks: %v\n", getTasks())
+
+	addTask(Task{Id: 1, Name: "familazie with go", isCompleted: false})
+
+	fmt.Printf("Task: %v\n", getTask(1))
+}
