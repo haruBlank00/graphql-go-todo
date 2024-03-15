@@ -22,7 +22,11 @@ const App = () => {
 
   const createNewTodoHandler: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    // createTodo(newTodoInput);
+    createTodo({
+      variables: {
+        input: newTodoInput,
+      },
+    });
   };
 
   const handleFormInputChange = <T,>(
@@ -38,43 +42,56 @@ const App = () => {
   };
 
   return (
-    <div>
-      <h1>To do app with graphql and apollo client</h1>
+    <div className="container mx-auto">
+      <h1 className="text-3xl font-bold mb-8">
+        To do app with GraphQL and Apollo Client
+      </h1>
 
       <div>
-        <h1>Create todo</h1>
-        <form onSubmit={createNewTodoHandler} style={{}}>
+        <h2 className="text-2xl font-bold mb-4">Create todo</h2>
+        <form
+          onSubmit={createNewTodoHandler}
+          className="p-4 border border-gray-300 rounded-md"
+        >
+          {isCreateTodoLoading && <p>Creating new todo...</p>}
+          {createTodoError && (
+            <p>Error creating new todo: {createTodoError.message} </p>
+          )}
           <input
             type="text"
-            placeholder="john doe"
+            placeholder="Enter todo"
             name="text"
             value={newTodoInput.text}
             onChange={(e) => handleFormInputChange(e, setNewTodoInput)}
+            className="block w-full px-4 py-2 border border-gray-300 rounded-md mb-4"
           />
           <input
             type="text"
-            placeholder="userId: 1, 2"
+            placeholder="Enter user ID"
             name="userId"
-            value={newTodoInput.text}
+            value={newTodoInput.userId}
             onChange={(e) => handleFormInputChange(e, setNewTodoInput)}
+            className="block w-full px-4 py-2 border border-gray-300 rounded-md mb-4"
           />
-          <button type="submit">Create new todo</button>
+          <button
+            type="submit"
+            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+          >
+            Create new todo
+          </button>
         </form>
       </div>
 
-      <div
-        style={{
-          border: "2px solid black",
-          padding: "8px",
-        }}
-      >
+      <div className="border border-gray-300 rounded-md p-4 mt-8">
         {todosError && (
-          <p style={{ color: "red", fontSize: 24 }}>{todosError.message}</p>
+          <p className="text-red-600 text-xl mb-4">{todosError.message}</p>
         )}
 
         {isTodosLoading && <p>Todos are Loading...</p>}
 
-        {todosNetworkStatus && <p>Todos network status: {}</p>}
+        {todosNetworkStatus && (
+          <p>Todos network status: {todosNetworkStatus}</p>
+        )}
 
         {todos && <Todos todos={todos} />}
       </div>
