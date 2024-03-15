@@ -6,16 +6,15 @@ package graph
 
 import (
 	"context"
-	"crypto/rand"
 	"fmt"
-	"math/big"
 	"server/graph/model"
+	"server/utils"
 )
 
 // CreateTodo is the resolver for the createTodo field.
 func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodoInput) (*model.Todo, error) {
 	// panic(fmt.Errorf("not implemented: CreateTodo - createTodo"))
-	id := randNum()
+	id := utils.RandNum()
 	newTodo := &model.Todo{
 		ID:     fmt.Sprintf("%d", id),
 		Text:   input.Text,
@@ -30,7 +29,7 @@ func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodoIn
 // Createuser is the resolver for the createuser field.
 func (r *mutationResolver) Createuser(ctx context.Context, input model.NewUserInput) (*model.User, error) {
 	// panic(fmt.Errorf("not implemented: Todos - todos"))
-	id := randNum()
+	id := utils.RandNum()
 	newUser := &model.User{
 		ID:   fmt.Sprintf("%d", id),
 		Name: input.Name,
@@ -41,6 +40,9 @@ func (r *mutationResolver) Createuser(ctx context.Context, input model.NewUserIn
 
 // Todos is the resolver for the todos field.
 func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
+	if len(r.todos) == 0 {
+		r.PopulateDummyData()
+	}
 	return r.todos, nil
 }
 
@@ -57,14 +59,3 @@ func (r *Resolver) Query() QueryResolver { return &queryResolver{r} }
 
 type mutationResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
-
-// !!! WARNING !!!
-// The code below was going to be deleted when updating resolvers. It has been copied here so you have
-// one last chance to move it out of harms way if you want. There are two reasons this happens:
-//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
-//     it when you're done.
-//   - You have helper methods in this file. Move them out to keep these resolver files clean.
-func randNum() *big.Int {
-	randNumber, _ := rand.Int(rand.Reader, big.NewInt(100))
-	return randNumber
-}
