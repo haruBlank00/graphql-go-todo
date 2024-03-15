@@ -13,7 +13,7 @@ export const Todos = ({
         textDecoration: todo.done ? "line-through" : "none",
       }}
     >
-      {i} Todo: {todo.text}
+      {i + 1} Todo: {todo.text}
     </p>
   ));
 };

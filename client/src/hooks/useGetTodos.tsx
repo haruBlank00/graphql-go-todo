@@ -1,4 +1,4 @@
-import { useQuery, QueryOptions } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { GET_TODOS } from "../graphql/queries";
 
 export const useGetTodos = () => {
@@ -6,7 +6,8 @@ export const useGetTodos = () => {
     notifyOnNetworkStatusChange: true,
     fetchPolicy: "cache-first",
     onCompleted(data) {
-      console.log({ data });
+      const todos = data.todos;
+      console.log({ todos });
     },
   });
 
