@@ -28,6 +28,6 @@ func main() {
 	http.Handle("/query", srv)
 
 	log.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
-	corsHandler := cors.Default().Handler(srv)
+	corsHandler := cors.Default().Handler(http.DefaultServeMux)
 	log.Fatal(http.ListenAndServe(":"+port, corsHandler))
 }

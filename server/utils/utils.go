@@ -1,11 +1,9 @@
 package utils
 
 import (
-	"crypto/rand"
-	"math/big"
+	"github.com/google/uuid"
 )
 
-func RandNum() *big.Int {
-	randNumber, _ := rand.Int(rand.Reader, big.NewInt(100))
-	return randNumber
+func RandNum() uint32 {
+	return uuid.New().ID()
 }

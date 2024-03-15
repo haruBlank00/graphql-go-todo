@@ -8,19 +8,14 @@ require (
 )
 
 require (
-	github.com/cncf/xds/go v0.0.0-20230607035331-e9ce68804cb4 // indirect
-	github.com/envoyproxy/protoc-gen-validate v1.0.2 // indirect
-	github.com/felixge/httpsnoop v1.0.3 // indirect
-	github.com/golang/protobuf v1.5.3 // indirect
-	google.golang.org/protobuf v1.33.0 // indirect
+	github.com/kr/pretty v0.3.1 // indirect
+	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 )
 
 require (
 	github.com/agnivade/levenshtein v1.1.1 // indirect
 	github.com/cpuguy83/go-md2man/v2 v2.0.2 // indirect
-	github.com/envoyproxy/go-control-plane v0.12.0
 	github.com/google/uuid v1.6.0 // indirect
-	github.com/gorilla/handlers v1.5.2
 	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/hashicorp/golang-lru/v2 v2.0.7 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
