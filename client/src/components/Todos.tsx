@@ -1,7 +1,8 @@
+import { Link } from "@tanstack/react-router";
 import { useDeleteTodo } from "../hooks/useDeleteTodo";
 import { useGetTodos } from "../hooks/useGetTodos";
 
-import { FaTrash } from "react-icons/fa"; // Import the delete icon from react-icons
+import { FaEye, FaTrash } from "react-icons/fa"; // Import the delete icon from react-icons
 
 const TodosMapper = ({
   todos,
@@ -11,7 +12,7 @@ const TodosMapper = ({
   onDeleteTodo: (input: { variables: { input: { todoId: string } } }) => void; // Function to handle todo deletion
 }) => {
   return todos.map((todo, i) => (
-    <div key={todo.id} className="flex items-center mb-2">
+    <div key={todo.id} className="flex gap-2 items-center mb-2 cursor-pointer">
       <p
         style={{
           textDecoration: todo.done ? "line-through" : "none",
@@ -20,6 +21,14 @@ const TodosMapper = ({
       >
         {i + 1} Todo: {todo.text}
       </p>
+      <Link
+        to={`/todo/$todoId`}
+        params={{
+          todoId: todo.id,
+        }}
+      >
+        <FaEye className="text-blue-500" />
+      </Link>
       <FaTrash
         className="text-red-500 cursor-pointer"
         onClick={() =>
@@ -31,7 +40,6 @@ const TodosMapper = ({
             },
           })
         }
-        // Call onDeleteTodo function when the delete icon is clicked
       />
     </div>
   ));
