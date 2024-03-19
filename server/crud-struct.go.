@@ -47,6 +47,7 @@ func find(slice []Task, id int) (int, *Task) {
 func deleteTask() {
 
 }
+
 func main() {
 	fmt.Printf("Welcome to crud-struct\n")
 

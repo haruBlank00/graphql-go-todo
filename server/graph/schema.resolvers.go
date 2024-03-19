@@ -38,6 +38,21 @@ func (r *mutationResolver) Createuser(ctx context.Context, input model.NewUserIn
 	return newUser, nil
 }
 
+// DeleteTodo is the resolver for the deleteTodo field.
+func (r *mutationResolver) DeleteTodo(ctx context.Context, input model.DeleteTodoInput) (*bool, error) {
+	// panic(fmt.Errorf("not implemented: DeleteTodo - deleteTodo"))
+	id := input.TodoID
+	for i, todo := range r.todos {
+		if todo.ID == id {
+			r.todos = append(r.todos[:i], r.todos[i+1:]...)
+			trueValue := true
+			return &trueValue, nil
+		}
+	}
+	falseValue := false
+	return &falseValue, nil
+}
+
 // Todos is the resolver for the todos field.
 func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
 	if len(r.todos) == 0 {
@@ -51,11 +66,20 @@ func (r *queryResolver) Users(ctx context.Context) ([]*model.User, error) {
 	return r.users, nil
 }
 
+// CommentAdded is the resolver for the commentAdded field.
+func (r *subscriptionResolver) CommentAdded(ctx context.Context, todoID string) (<-chan *model.Comment, error) {
+	panic(fmt.Errorf("not implemented: CommentAdded - commentAdded"))
+}
+
 // Mutation returns MutationResolver implementation.
 func (r *Resolver) Mutation() MutationResolver { return &mutationResolver{r} }
 
 // Query returns QueryResolver implementation.
 func (r *Resolver) Query() QueryResolver { return &queryResolver{r} }
 
+// Subscription returns SubscriptionResolver implementation.
+func (r *Resolver) Subscription() SubscriptionResolver { return &subscriptionResolver{r} }
+
 type mutationResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
+type subscriptionResolver struct{ *Resolver }

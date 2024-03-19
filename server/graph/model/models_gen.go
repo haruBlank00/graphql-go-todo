@@ -2,6 +2,16 @@
 
 package model
 
+type Comment struct {
+	ID     string `json:"id"`
+	Text   string `json:"text"`
+	UserID string `json:"userId"`
+}
+
+type DeleteTodoInput struct {
+	TodoID string `json:"todoId"`
+}
+
 type Mutation struct {
 }
 
@@ -15,6 +25,9 @@ type NewUserInput struct {
 }
 
 type Query struct {
+}
+
+type Subscription struct {
 }
 
 type Todo struct {

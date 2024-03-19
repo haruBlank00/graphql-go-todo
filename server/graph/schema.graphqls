@@ -2,6 +2,12 @@
 #
 # https://gqlgen.com/getting-started/
 
+type Comment {
+  id: ID!
+  text: String!
+  userId: String!
+}
+
 type Todo {
   id: ID!
   text: String!
@@ -28,7 +34,16 @@ input NewUserInput {
   name: String!
 }
 
+input DeleteTodoInput {
+  todoId: ID!
+}
+
 type Mutation {
   createTodo(input: NewTodoInput!): Todo!
   createuser(input: NewUserInput!): User!
+  deleteTodo(input: DeleteTodoInput!): Boolean
+}
+
+type Subscription {
+  commentAdded(todoId: ID!): Comment
 }
