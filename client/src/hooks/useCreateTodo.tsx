@@ -13,6 +13,15 @@ const CREATE_A_TODO = gql`
 
 export const useCreateTodo = () => {
   const [createTodo, { loading, data, error }] = useMutation(CREATE_A_TODO, {
+    optimisticResponse: {
+      createTodo: {
+        id: "temp-id",
+        __typename: "Todo",
+        text: "optimistic todo",
+        done: false,
+        userId: 2,
+      },
+    },
     onCompleted(data) {
       const newTodo = data?.createTodo;
       console.log({ newTodo });
@@ -27,12 +36,12 @@ export const useCreateTodo = () => {
       }) ?? { todos: [] };
 
       // we can update the cached data
-      // cache.writeQuery({
-      //   query: GET_TODOS,
-      //   data: {
-      //     todos: [...cachedTodos.todos, newTodo],
-      //   },
-      // });
+      cache.writeQuery({
+        query: GET_TODOS,
+        data: {
+          todos: [...cachedTodos.todos, newTodo],
+        },
+      });
 
       // cache.modify({
       //   fields: {
@@ -41,11 +50,18 @@ export const useCreateTodo = () => {
       //     },
       //   },
       // });
-      cache.modify({
-        fields: {
-          todos() {},
-        },
-      });
+
+      // cache.modify({
+      //   fields: {
+      //     todos(existingTodos = []) {
+      //       return [...existingTodos, newTodo];
+      //     },
+      //     // users() {},
+      //   },
+      // });
+    },
+    onQueryUpdated(observableQuery) {
+      console.log({ observableQuery });
     },
   });
 

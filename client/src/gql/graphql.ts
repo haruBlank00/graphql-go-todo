@@ -16,10 +16,22 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type Comment = {
+  __typename?: 'Comment';
+  id: Scalars['ID']['output'];
+  text: Scalars['String']['output'];
+  userId: Scalars['String']['output'];
+};
+
+export type DeleteTodoInput = {
+  todoId: Scalars['ID']['input'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createTodo: Todo;
   createuser: User;
+  deleteTodo?: Maybe<Scalars['Boolean']['output']>;
 };
 
 
@@ -30,6 +42,11 @@ export type MutationCreateTodoArgs = {
 
 export type MutationCreateuserArgs = {
   input: NewUserInput;
+};
+
+
+export type MutationDeleteTodoArgs = {
+  input: DeleteTodoInput;
 };
 
 export type NewTodoInput = {
@@ -45,6 +62,16 @@ export type Query = {
   __typename?: 'Query';
   todos: Array<Todo>;
   users: Array<User>;
+};
+
+export type Subscription = {
+  __typename?: 'Subscription';
+  commentAdded?: Maybe<Comment>;
+};
+
+
+export type SubscriptionCommentAddedArgs = {
+  todoId: Scalars['ID']['input'];
 };
 
 export type Todo = {

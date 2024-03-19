@@ -13,7 +13,7 @@ export const useGetUsers = () => {
   const { data, loading, networkStatus, error } = useQuery(GET_USERS);
 
   return {
-    users: data,
+    users: data?.users,
     isUsersLoading: loading,
     userQueryNetworkStatus: networkStatus,
     userQueryError: error,

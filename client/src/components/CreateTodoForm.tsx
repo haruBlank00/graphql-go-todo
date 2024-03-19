@@ -17,6 +17,14 @@ export const CreateTodoForm = () => {
       variables: {
         input: newTodoInput,
       },
+      optimisticResponse: {
+        createTodo: {
+          id: "TODO_ID",
+          text: newTodoInput.text,
+          done: false,
+          __typename: "Todo",
+        },
+      },
     });
   };
   return (

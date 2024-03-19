@@ -1,5 +1,6 @@
 import { CreateTodoForm } from "./components/CreateTodoForm";
 import { Todos } from "./components/Todos";
+import { UsersList } from "./components/UsersList";
 
 const App = () => {
   return (
@@ -8,8 +9,9 @@ const App = () => {
         To do app with GraphQL and Apollo Client
       </h1>
 
-      <div>
+      <div className="flex gap-4">
         <CreateTodoForm />
+        <UsersList />
       </div>
       <Todos />
     </div>
