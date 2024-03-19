@@ -1,3 +1,11 @@
 import { gql } from "@apollo/client";
 
-// const COMMENTS_SUBSCRIPTIONS = gql``
+export const COMMENTS_SUBSCRIPTIONS = gql`
+  subscription onCommentAdded {
+    commendAdded(todoId: $todoId) {
+      id
+      text
+      userId
+    }
+  }
+`;
