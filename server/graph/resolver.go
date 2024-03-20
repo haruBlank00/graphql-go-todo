@@ -28,6 +28,7 @@ func (r *Resolver) PopulateDummyData() {
 			Text:   "Learn GraphQL fundamentals",
 			UserID: "1",
 			Done:   true,
+			
 		},
 		&model.Todo{
 			ID:     "2",

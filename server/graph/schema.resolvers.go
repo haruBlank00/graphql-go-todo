@@ -66,6 +66,17 @@ func (r *queryResolver) Users(ctx context.Context) ([]*model.User, error) {
 	return r.users, nil
 }
 
+// Todo is the resolver for the todo field.
+func (r *queryResolver) Todo(ctx context.Context, input *model.TodoID) (*model.Todo, error) {
+	for _, todo := range r.todos {
+		fmt.Println("current todo", todo)
+		if todo.ID == input.ID {
+			return todo, nil
+		}
+	}
+	return nil, fmt.Errorf("todo not found")
+}
+
 // CommentAdded is the resolver for the commentAdded field.
 func (r *subscriptionResolver) CommentAdded(ctx context.Context, todoID string) (<-chan *model.Comment, error) {
 	panic(fmt.Errorf("not implemented: CommentAdded - commentAdded"))
