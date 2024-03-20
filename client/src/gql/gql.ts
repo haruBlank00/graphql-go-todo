@@ -13,9 +13,12 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
+    "\n  mutation CreateATodo($input: NewTodoInput!) {\n    createTodo(input: $input) {\n      id\n      text\n      done\n    }\n  }\n": types.CreateATodoDocument,
+    "\n  mutation CreateNewComment($input: NewCommentInput!) {\n    addNewComment(input: $input) {\n      id\n      text\n      userId\n    }\n  }\n": types.CreateNewCommentDocument,
     "\n  query GetTodos {\n    todos {\n      id\n      text\n      done\n      userId\n    }\n  }\n": types.GetTodosDocument,
     "\n  query GetTodo($todoId: TodoId!) {\n    todo(input: $todoId) {\n      id\n      text\n      done\n      userId\n\n      comments {\n        id\n        text\n        userId\n      }\n    }\n  }\n": types.GetTodoDocument,
     "\n  subscription onCommentAdded($todoId: ID!) {\n    commentAdded(todoId: $todoId) {\n      id\n      text\n      userId\n    }\n  }\n": types.OnCommentAddedDocument,
+    "\n  subscription CurrentServerTime {\n    currentTime {\n      unixTime\n      timeStamp\n    }\n  }\n": types.CurrentServerTimeDocument,
 };
 
 /**
@@ -35,6 +38,14 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function graphql(source: "\n  mutation CreateATodo($input: NewTodoInput!) {\n    createTodo(input: $input) {\n      id\n      text\n      done\n    }\n  }\n"): (typeof documents)["\n  mutation CreateATodo($input: NewTodoInput!) {\n    createTodo(input: $input) {\n      id\n      text\n      done\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation CreateNewComment($input: NewCommentInput!) {\n    addNewComment(input: $input) {\n      id\n      text\n      userId\n    }\n  }\n"): (typeof documents)["\n  mutation CreateNewComment($input: NewCommentInput!) {\n    addNewComment(input: $input) {\n      id\n      text\n      userId\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function graphql(source: "\n  query GetTodos {\n    todos {\n      id\n      text\n      done\n      userId\n    }\n  }\n"): (typeof documents)["\n  query GetTodos {\n    todos {\n      id\n      text\n      done\n      userId\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -44,6 +55,10 @@ export function graphql(source: "\n  query GetTodo($todoId: TodoId!) {\n    todo
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  subscription onCommentAdded($todoId: ID!) {\n    commentAdded(todoId: $todoId) {\n      id\n      text\n      userId\n    }\n  }\n"): (typeof documents)["\n  subscription onCommentAdded($todoId: ID!) {\n    commentAdded(todoId: $todoId) {\n      id\n      text\n      userId\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  subscription CurrentServerTime {\n    currentTime {\n      unixTime\n      timeStamp\n    }\n  }\n"): (typeof documents)["\n  subscription CurrentServerTime {\n    currentTime {\n      unixTime\n      timeStamp\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

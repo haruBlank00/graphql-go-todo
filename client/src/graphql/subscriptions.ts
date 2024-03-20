@@ -9,3 +9,12 @@ export const COMMENTS_SUBSCRIPTIONS = gql`
     }
   }
 `;
+
+export const CURRENT_SERVER_TIME = gql`
+  subscription CurrentServerTime {
+    currentTime {
+      unixTime
+      timeStamp
+    }
+  }
+`;

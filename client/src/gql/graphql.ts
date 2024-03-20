@@ -29,9 +29,15 @@ export type DeleteTodoInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  addNewComment: Comment;
   createTodo: Todo;
   createuser: User;
-  deleteTodo?: Maybe<Scalars['Boolean']['output']>;
+  deleteTodo: Scalars['Boolean']['output'];
+};
+
+
+export type MutationAddNewCommentArgs = {
+  input: NewCommentInput;
 };
 
 
@@ -47,6 +53,12 @@ export type MutationCreateuserArgs = {
 
 export type MutationDeleteTodoArgs = {
   input: DeleteTodoInput;
+};
+
+export type NewCommentInput = {
+  text: Scalars['String']['input'];
+  todoId: Scalars['ID']['input'];
+  userId: Scalars['String']['input'];
 };
 
 export type NewTodoInput = {
@@ -73,11 +85,18 @@ export type QueryTodoArgs = {
 export type Subscription = {
   __typename?: 'Subscription';
   commentAdded?: Maybe<Comment>;
+  currentTime: Time;
 };
 
 
 export type SubscriptionCommentAddedArgs = {
   todoId: Scalars['ID']['input'];
+};
+
+export type Time = {
+  __typename?: 'Time';
+  timeStamp: Scalars['String']['output'];
+  unixTime: Scalars['Int']['output'];
 };
 
 export type Todo = {
@@ -99,6 +118,20 @@ export type User = {
   name: Scalars['String']['output'];
 };
 
+export type CreateATodoMutationVariables = Exact<{
+  input: NewTodoInput;
+}>;
+
+
+export type CreateATodoMutation = { __typename?: 'Mutation', createTodo: { __typename?: 'Todo', id: string, text: string, done: boolean } };
+
+export type CreateNewCommentMutationVariables = Exact<{
+  input: NewCommentInput;
+}>;
+
+
+export type CreateNewCommentMutation = { __typename?: 'Mutation', addNewComment: { __typename?: 'Comment', id: string, text: string, userId: string } };
+
 export type GetTodosQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -118,7 +151,15 @@ export type OnCommentAddedSubscriptionVariables = Exact<{
 
 export type OnCommentAddedSubscription = { __typename?: 'Subscription', commentAdded?: { __typename?: 'Comment', id: string, text: string, userId: string } | null };
 
+export type CurrentServerTimeSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
+
+export type CurrentServerTimeSubscription = { __typename?: 'Subscription', currentTime: { __typename?: 'Time', unixTime: number, timeStamp: string } };
+
+
+export const CreateATodoDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateATodo"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"NewTodoInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createTodo"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"done"}}]}}]}}]} as unknown as DocumentNode<CreateATodoMutation, CreateATodoMutationVariables>;
+export const CreateNewCommentDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateNewComment"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"NewCommentInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addNewComment"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}}]}}]}}]} as unknown as DocumentNode<CreateNewCommentMutation, CreateNewCommentMutationVariables>;
 export const GetTodosDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetTodos"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"todos"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"done"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}}]}}]}}]} as unknown as DocumentNode<GetTodosQuery, GetTodosQueryVariables>;
 export const GetTodoDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetTodo"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"todoId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"TodoId"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"todo"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"todoId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"done"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}},{"kind":"Field","name":{"kind":"Name","value":"comments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}}]}}]}}]}}]} as unknown as DocumentNode<GetTodoQuery, GetTodoQueryVariables>;
 export const OnCommentAddedDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"onCommentAdded"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"todoId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commentAdded"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"todoId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"todoId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}}]}}]}}]} as unknown as DocumentNode<OnCommentAddedSubscription, OnCommentAddedSubscriptionVariables>;
+export const CurrentServerTimeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"CurrentServerTime"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currentTime"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unixTime"}},{"kind":"Field","name":{"kind":"Name","value":"timeStamp"}}]}}]}}]} as unknown as DocumentNode<CurrentServerTimeSubscription, CurrentServerTimeSubscriptionVariables>;

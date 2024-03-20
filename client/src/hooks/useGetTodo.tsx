@@ -1,6 +1,5 @@
 import { useQuery } from "@apollo/client";
 import { GET_TODO } from "../graphql/queries";
-import { QueryTodoArgs } from "../gql/graphql";
 
 export const useGetTodo = (todoInput: { id: string }) => {
   const { data, loading, networkStatus, error } = useQuery(GET_TODO, {
@@ -10,8 +9,6 @@ export const useGetTodo = (todoInput: { id: string }) => {
       },
     },
   });
-
-  console.log({ data });
 
   return {
     todo: data?.todo,

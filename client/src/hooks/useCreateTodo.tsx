@@ -1,15 +1,6 @@
-import { gql, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
+import { CREATE_A_TODO } from "../graphql/mutations";
 import { GET_TODOS } from "../graphql/queries";
-
-const CREATE_A_TODO = gql`
-  mutation CreateATodo($input: NewTodoInput!) {
-    createTodo(input: $input) {
-      id
-      text
-      done
-    }
-  }
-`;
 
 export const useCreateTodo = () => {
   const [createTodo, { loading, data, error }] = useMutation(CREATE_A_TODO, {

@@ -21,12 +21,7 @@ const TodosMapper = ({
       >
         {i + 1} Todo: {todo.text}
       </p>
-      <Link
-        to={`/todo/$todoId`}
-        params={{
-          todoId: todo.id,
-        }}
-      >
+      <Link to="/todo/$todoId" params={{ todoId: todo.id }}>
         <FaEye className="text-blue-500" />
       </Link>
       <FaTrash

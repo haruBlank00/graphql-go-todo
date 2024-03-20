@@ -1,6 +1,9 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { Loader } from "../components/Loader";
+import { useAddComment } from "../hooks/useAddComment";
 import { useGetTodo } from "../hooks/useGetTodo";
+import { useServerCurrentTime } from "../hooks/useServerCurrentTime";
 
 export const Route = createLazyFileRoute("/todo/$todoId")({
   component: TodoPage,
@@ -8,19 +11,23 @@ export const Route = createLazyFileRoute("/todo/$todoId")({
 
 function TodoPage() {
   const { todoId } = Route.useParams();
-  const { isTodoLoading, todo, todoQueryError, todoQueryNetworkStatus } =
-    useGetTodo({ id: todoId });
+  const { isTodoLoading, todo } = useGetTodo({
+    id: todoId,
+  });
+  const [addComment] = useAddComment();
+  const [commentInput, setCommetInput] = useState("");
+  const { currentTime } = useServerCurrentTime();
 
-  const handleCompleteToggle = () => {
-    // setTodo((prevTodo) => ({ ...prevTodo, completed: !prevTodo.completed }));
-  };
+  if (isTodoLoading) {
+    return <Loader />;
+  }
 
   if (!todo) {
     return <h1>item not found</h1>;
   }
-
   return (
     <div className="max-w-xl mx-auto mt-8 p-4 border rounded shadow-lg">
+      <h2>Current Servertime: {currentTime}</h2>
       <h1 className="text-3xl font-bold mb-4">Todo {todo.id}</h1>
       <div className="mb-4">
         <p className="text-lg mb-2">
@@ -32,7 +39,6 @@ function TodoPage() {
         </p>
         <button
           className={`px-4 py-2 ${todo.done ? "bg-gray-300" : "bg-green-500 hover:bg-green-600"} text-white rounded`}
-          onClick={handleCompleteToggle}
         >
           {todo.done ? "Mark Incomplete" : "Mark Complete"}
         </button>
@@ -43,8 +49,29 @@ function TodoPage() {
           className="w-full p-2 border rounded"
           rows={3}
           placeholder="Enter your comment here..."
+          onChange={(e) => {
+            const value = e.target.value;
+            setCommetInput(value);
+          }}
+          value={commentInput}
         ></textarea>
-        <button className="mt-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded">
+        <button
+          className="mt-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded"
+          onClick={() => {
+            addComment({
+              variables: {
+                input: {
+                  text: commentInput,
+                  todoId: todo.id,
+                  userId: 2,
+                },
+              },
+              onCompleted: () => {
+                setCommetInput("");
+              },
+            });
+          }}
+        >
           Add Comment
         </button>
       </div>
