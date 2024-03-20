@@ -7,3 +7,7 @@ import (
 func RandNum() uint32 {
 	return uuid.New().ID()
 }
+
+func FindOne() {
+
+}

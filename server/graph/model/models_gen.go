@@ -15,6 +15,12 @@ type DeleteTodoInput struct {
 type Mutation struct {
 }
 
+type NewCommentInput struct {
+	Text   string `json:"text"`
+	UserID string `json:"userId"`
+	TodoID string `json:"todoId"`
+}
+
 type NewTodoInput struct {
 	Text   string `json:"text"`
 	UserID string `json:"userId"`
@@ -28,6 +34,11 @@ type Query struct {
 }
 
 type Subscription struct {
+}
+
+type Time struct {
+	UnixTime  int    `json:"unixTime"`
+	TimeStamp string `json:"timeStamp"`
 }
 
 type Todo struct {

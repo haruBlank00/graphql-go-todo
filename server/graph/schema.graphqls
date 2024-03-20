@@ -45,12 +45,25 @@ input DeleteTodoInput {
   todoId: ID!
 }
 
+input NewCommentInput {
+  text: String!
+  userId: String!
+  todoId: ID!
+}
+
 type Mutation {
   createTodo(input: NewTodoInput!): Todo!
   createuser(input: NewUserInput!): User!
-  deleteTodo(input: DeleteTodoInput!): Boolean
+  deleteTodo(input: DeleteTodoInput!): Boolean!
+  addNewComment(input: NewCommentInput!): Comment!
+}
+
+type Time {
+  unixTime: Int!
+  timeStamp: String!
 }
 
 type Subscription {
   commentAdded(todoId: ID!): Comment
+  currentTime: Time!
 }
