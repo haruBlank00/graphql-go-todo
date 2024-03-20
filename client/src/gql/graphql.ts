@@ -60,8 +60,14 @@ export type NewUserInput = {
 
 export type Query = {
   __typename?: 'Query';
+  todo: Todo;
   todos: Array<Todo>;
   users: Array<User>;
+};
+
+
+export type QueryTodoArgs = {
+  input?: InputMaybe<TodoId>;
 };
 
 export type Subscription = {
@@ -76,10 +82,15 @@ export type SubscriptionCommentAddedArgs = {
 
 export type Todo = {
   __typename?: 'Todo';
+  comments: Array<Comment>;
   done: Scalars['Boolean']['output'];
   id: Scalars['ID']['output'];
   text: Scalars['String']['output'];
   userId: Scalars['String']['output'];
+};
+
+export type TodoId = {
+  id: Scalars['ID']['input'];
 };
 
 export type User = {
@@ -93,5 +104,21 @@ export type GetTodosQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetTodosQuery = { __typename?: 'Query', todos: Array<{ __typename?: 'Todo', id: string, text: string, done: boolean, userId: string }> };
 
+export type GetTodoQueryVariables = Exact<{
+  todoId: TodoId;
+}>;
+
+
+export type GetTodoQuery = { __typename?: 'Query', todo: { __typename?: 'Todo', id: string, text: string, done: boolean, userId: string, comments: Array<{ __typename?: 'Comment', id: string, text: string, userId: string }> } };
+
+export type OnCommentAddedSubscriptionVariables = Exact<{
+  todoId: Scalars['ID']['input'];
+}>;
+
+
+export type OnCommentAddedSubscription = { __typename?: 'Subscription', commentAdded?: { __typename?: 'Comment', id: string, text: string, userId: string } | null };
+
 
 export const GetTodosDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetTodos"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"todos"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"done"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}}]}}]}}]} as unknown as DocumentNode<GetTodosQuery, GetTodosQueryVariables>;
+export const GetTodoDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetTodo"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"todoId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"TodoId"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"todo"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"todoId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"done"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}},{"kind":"Field","name":{"kind":"Name","value":"comments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}}]}}]}}]}}]} as unknown as DocumentNode<GetTodoQuery, GetTodoQueryVariables>;
+export const OnCommentAddedDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"onCommentAdded"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"todoId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commentAdded"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"todoId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"todoId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}}]}}]}}]} as unknown as DocumentNode<OnCommentAddedSubscription, OnCommentAddedSubscriptionVariables>;

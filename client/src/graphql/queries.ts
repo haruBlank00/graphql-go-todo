@@ -10,3 +10,20 @@ export const GET_TODOS = graphql(`
     }
   }
 `);
+
+export const GET_TODO = graphql(`
+  query GetTodo($todoId: TodoId!) {
+    todo(input: $todoId) {
+      id
+      text
+      done
+      userId
+
+      comments {
+        id
+        text
+        userId
+      }
+    }
+  }
+`);

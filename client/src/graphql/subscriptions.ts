@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const COMMENTS_SUBSCRIPTIONS = gql`
-  subscription onCommentAdded {
-    commendAdded(todoId: $todoId) {
+  subscription onCommentAdded($todoId: ID!) {
+    commentAdded(todoId: $todoId) {
       id
       text
       userId
