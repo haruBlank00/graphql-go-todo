@@ -25,9 +25,11 @@ function TodoPage() {
   if (!todo) {
     return <h1>item not found</h1>;
   }
+
+  const time = new Date(currentTime?.timeStamp).toTimeString();
   return (
     <div className="max-w-xl mx-auto mt-8 p-4 border rounded shadow-lg">
-      <h2>Current Servertime: {currentTime}</h2>
+      <h2>Current Servertime: {time} </h2>
       <h1 className="text-3xl font-bold mb-4">Todo {todo.id}</h1>
       <div className="mb-4">
         <p className="text-lg mb-2">
